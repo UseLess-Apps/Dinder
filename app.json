@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DinderTest",
-    "slug": "DinderTest",
+    "name": "Dinder",
+    "slug": "Dinder",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": [
@@ -10,9 +10,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/chicken.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/chicken.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
