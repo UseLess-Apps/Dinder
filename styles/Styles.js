@@ -3,7 +3,8 @@ import Dimensions from 'Dimensions';
 
 var {height, width} = Dimensions.get('window');
 
-export const Styles = StyleSheet.create({
+export default Styles = StyleSheet.create({
+  // Home Screen styles
   homeText: {
     textAlign: 'center',
     backgroundColor: 'blue',
@@ -35,5 +36,6 @@ export const Styles = StyleSheet.create({
     marginRight: width * 0.05,
     height: height * 0.1,
   },
+  // Food Types screen styles
 
   });

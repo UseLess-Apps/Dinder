@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Styles } from '../styles/Styles.js';
+import Styles from '../styles/Styles.js';
 import {
   Text,
   TextInput,
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import { setLocation } from '../redux/actions';
+import { SELECT_FOOD_TYPES } from '../navigation/AppNavigator.js';
 
 class HomeScreen extends React.Component {
   
@@ -35,6 +36,8 @@ class HomeScreen extends React.Component {
   }
 
   render() {
+    const {navigate} = this.props.navigation;
+
     return (
       <View style={Styles.homeScreenContainer}> 
         <Text style={Styles.homeText}> Dinder!! </Text>
@@ -48,7 +51,8 @@ class HomeScreen extends React.Component {
             <Image source={require('../assets/images/myLocation.png')}/>
           </TouchableOpacity>
         </View>
-        <Button title='Click Me!'  disabled={this.props.lat == null ? true : false}/>
+        <Button title='Click Me!'  disabled={this.props.lat == null ? true : false}
+          onPress={() => navigate(SELECT_FOOD_TYPES)}/>
       </View>
       
     );
@@ -63,5 +67,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(HomeScreen);
-
-
