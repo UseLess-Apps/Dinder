@@ -3,13 +3,14 @@ import { ScrollView, FlatList, Text, View, ActivityIndicator } from 'react-nativ
 import Styles from '../styles/Styles.js';
 import { getCuisines } from '../backEndRequests';
 import { connect } from 'react-redux';
+import CuisineTypeItem from '../components/CuisineTypeItem';
 
 
 class FoodTypeScreen extends React.Component {
   
   constructor(props){
     super(props);
-    this.state ={ dataSource:null, isLoading: true, error: false}
+    this.state ={ dataSource:null, isLoading: true, error: false, selectedCuisines: []}
   }
 
   static navigationOptions = {
@@ -40,8 +41,6 @@ class FoodTypeScreen extends React.Component {
 
   }
 
-
-
   render(){
 
     if(this.state.isLoading){
@@ -63,9 +62,10 @@ class FoodTypeScreen extends React.Component {
       <View style={{flex: 1, paddingTop:20}}>
         <FlatList
           data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.cuisine.cuisine_name}</Text>}
+          renderItem={({item}) => <CuisineTypeItem id={item.cuisine.cuisine_id} text={item.cuisine.cuisine_name} />}
           keyExtractor={({id}, index) => id}
         />
+        <Text>{JSON.stringify(this.props.selectedCuisines)}</Text>
       </View>
     );
   }
@@ -73,8 +73,9 @@ class FoodTypeScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    lat: state.lat,
-    long: state.long
+    // lat: state.lat,
+    // long: state.long,
+    selectedCuisines: state.selectedCuisines,
   };
 }
 

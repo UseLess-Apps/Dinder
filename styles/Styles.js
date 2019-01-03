@@ -32,8 +32,7 @@ export default Styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     marginTop: height * 0.2,
-    marginLeft: width * 0.05,
-    marginRight: width * 0.05,
+    marginHorizontal: width * 0.05,
     height: height * 0.1,
   },
   // Food Types screen styles
