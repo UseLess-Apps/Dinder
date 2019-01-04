@@ -37,4 +37,17 @@ export default Styles = StyleSheet.create({
   },
   // Food Types screen styles
 
+  // Dinder Screen styles
+  foodCardContainer: {
+    padding: 0,
+    margin: 0
+  },
+  foodCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width,
+    height: height,
+    margin: 0
+  },
+
   });

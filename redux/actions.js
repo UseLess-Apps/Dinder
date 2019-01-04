@@ -1,6 +1,7 @@
 export const SET_LOCATION = "SET_LOCATION";
 export const SET_CUISINE_ID = "SET_CUISINE_ID"
 export const REMOVE_CUISINE_ID = "REMOVE_CUISINE_ID"
+export const RESET_CUISINE_ID = "RESET_CUISINE_ID"
 
 export function setLocation(lat, long) {
     return {
@@ -21,5 +22,11 @@ export function removeCuisineID(id) {
   return {
     type: REMOVE_CUISINE_ID,
     selectedCuisine: id
+  }
+}
+
+export function resetCusines() {
+  return {
+    type: RESET_CUISINE_ID
   }
 }

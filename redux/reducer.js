@@ -1,4 +1,4 @@
-import { SET_LOCATION, SET_CUISINE_ID, REMOVE_CUISINE_ID } from './actions';
+import { SET_LOCATION, SET_CUISINE_ID, REMOVE_CUISINE_ID, RESET_CUISINE_ID } from './actions';
 
 const INITIAL_STATE = {
     lat: null,
@@ -28,6 +28,11 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 selectedCuisines: copy,
+            }
+        case RESET_CUISINE_ID:
+            return {
+                ...state,
+                selectedCuisines: [],
             }
         default:
             return state

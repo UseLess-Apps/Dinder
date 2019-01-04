@@ -1,9 +1,10 @@
 import React from 'react';
-import { ScrollView, FlatList, Text, View, ActivityIndicator } from 'react-native';
-import Styles from '../styles/Styles.js';
+import { FlatList, Text, View, ActivityIndicator, Button } from 'react-native';
 import { getCuisines } from '../backEndRequests';
 import { connect } from 'react-redux';
 import CuisineTypeItem from '../components/CuisineTypeItem';
+import { resetCusines } from '../redux/actions.js';
+import { DINDER_SWIPE_SCREEN } from '../navigation/AppNavigator';
 
 
 class FoodTypeScreen extends React.Component {
@@ -18,6 +19,7 @@ class FoodTypeScreen extends React.Component {
   };
 
   componentDidMount(){
+    this.props.dispatch(resetCusines());
     return getCuisines(this.props.lat, this.props.long)
       .then((responseJson) => {
         this.setState({
@@ -42,7 +44,7 @@ class FoodTypeScreen extends React.Component {
   }
 
   render(){
-
+    const {navigate} = this.props.navigation;
     if(this.state.isLoading){
       return(
         <View style={{flex: 1, padding: 20}}>
@@ -65,6 +67,8 @@ class FoodTypeScreen extends React.Component {
           renderItem={({item}) => <CuisineTypeItem id={item.cuisine.cuisine_id} text={item.cuisine.cuisine_name} />}
           keyExtractor={({id}, index) => id}
         />
+        <Button title='Find Match!' disabled={this.props.selectedCuisines.length == 0 ? true : false}
+          onPress={() => navigate(DINDER_SWIPE_SCREEN)}/>        
         <Text>{JSON.stringify(this.props.selectedCuisines)}</Text>
       </View>
     );
