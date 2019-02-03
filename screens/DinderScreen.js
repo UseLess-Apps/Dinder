@@ -77,7 +77,7 @@ class DinderScreen extends React.Component {
             
             return <View style={[Styles.foodCard]}>
                 <Text>{restaurantData.name}</Text>
-                <Image source={{uri:restaurantData.thumbnail}}/>
+                <Image style={{height:150, width: 150}} source={{uri:restaurantData.thumbnail}}/>
             </View>
           }}
           renderNoMoreCards={() => <Text>NO MORE CARDS</Text>}
