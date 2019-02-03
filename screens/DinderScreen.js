@@ -1,9 +1,9 @@
 import React from 'react';
 import SwipeCards from 'react-native-swipe-cards';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import Styles from '../styles/Styles';
-
+import { postMatches } from '../backEndRequests';
 
 class DinderScreen extends React.Component {
   
@@ -11,9 +11,8 @@ class DinderScreen extends React.Component {
       super(props);
       this.state ={ 
           dataSource:null, 
-          isLoading: false, 
+          isLoading: true, 
           error: false, 
-          selectedCuisines: [],
           cards: [
             {text: 'Tomato', backgroundColor: 'red'},
             {text: 'Aubergine', backgroundColor: 'purple'},
@@ -30,30 +29,29 @@ class DinderScreen extends React.Component {
       title: 'Match With Food',
     };
   
-    // componentDidMount(){
-    //   this.props.dispatch(resetCusines());
-    //   return getCuisines(this.props.lat, this.props.long)
-    //     .then((responseJson) => {
-    //       this.setState({
-    //         isLoading: false,
-    //         dataSource: responseJson.cuisines,
-    //         error: false,
-    //       }, function(){
+    componentDidMount(){
+      console.log(typeof(this.props.selectedCuisines) + this.props.selectedCuisines);
+      return postMatches(this.props.lat, this.props.long, 0, this.props.selectedCuisines)
+        .then((responseJson) => {
+          this.setState({
+            isLoading: false,
+            dataSource: responseJson,
+            error: false,
+          }, function(){
+          });
   
-    //       });
+        })
+        .catch((error) =>{
+          this.setState({
+            isLoading: false,
+            dataSource: null, 
+            error: true,
+          }, function(){
   
-    //     })
-    //     .catch((error) =>{
-    //       this.setState({
-    //         isLoading: false,
-    //         dataSource: null, 
-    //         error: true,
-    //       }, function(){
+          });
+        });
   
-    //       });
-    //     });
-  
-    // }
+    }
   
     render(){
   
@@ -74,11 +72,12 @@ class DinderScreen extends React.Component {
   
       return (
         <SwipeCards
-          cards={this.state.cards}
-          renderCard={(cardData) => {
+          cards={this.state.dataSource}
+          renderCard={(restaurantData) => {
             
-            return <View style={[Styles.foodCard, {backgroundColor: cardData.backgroundColor}]}>
-                <Text>{cardData.text}</Text>
+            return <View style={[Styles.foodCard]}>
+                <Text>{restaurantData.name}</Text>
+                <Image source={{uri:restaurantData.thumbnail}}/>
             </View>
           }}
           renderNoMoreCards={() => <Text>NO MORE CARDS</Text>}
@@ -106,6 +105,9 @@ class DinderScreen extends React.Component {
   
   function mapStateToProps(state) {
     return {
+      lat: state.lat,
+      long: state.long,
+      selectedCuisines: state.selectedCuisines,
     };
   }
 

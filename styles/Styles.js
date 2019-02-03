@@ -47,7 +47,8 @@ export default Styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
     height: height,
-    margin: 0
+    margin: 0,
+    backgroundColor: 'red',
   },
 
   });

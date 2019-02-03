@@ -77,8 +77,8 @@ class FoodTypeScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    // lat: state.lat,
-    // long: state.long,
+    lat: state.lat,
+    long: state.long,
     selectedCuisines: state.selectedCuisines,
   };
 }
