@@ -9,20 +9,12 @@ class DinderScreen extends React.Component {
   
     constructor(props){
       super(props);
-      this.state ={ 
-          dataSource:null, 
+      this.state = { 
+          dataSource: [], 
           isLoading: true, 
           error: false, 
-          cards: [
-            {text: 'Tomato', backgroundColor: 'red'},
-            {text: 'Aubergine', backgroundColor: 'purple'},
-            {text: 'Courgette', backgroundColor: 'green'},
-            {text: 'Blueberry', backgroundColor: 'blue'},
-            {text: 'Umm...', backgroundColor: 'cyan'},
-            {text: 'orange', backgroundColor: 'orange'},
-          ],
+          count: 0,
       }
-
     }
   
     static navigationOptions = {
@@ -31,11 +23,16 @@ class DinderScreen extends React.Component {
   
     componentDidMount(){
       console.log(typeof(this.props.selectedCuisines) + this.props.selectedCuisines);
-      return postMatches(this.props.lat, this.props.long, 0, this.props.selectedCuisines)
+      return this.getRestaraunts(0);
+    }
+
+    getRestaraunts = (start) => {
+      return postMatches(this.props.lat, this.props.long, start, this.props.selectedCuisines)
         .then((responseJson) => {
+          let copy = [...this.state.dataSource];
           this.setState({
             isLoading: false,
-            dataSource: responseJson,
+            dataSource: copy.concat(responseJson),
             error: false,
           }, function(){
           });
@@ -43,14 +40,27 @@ class DinderScreen extends React.Component {
         })
         .catch((error) =>{
           this.setState({
+            ...this.state,
             isLoading: false,
-            dataSource: null, 
             error: true,
           }, function(){
   
           });
         });
-  
+    }
+
+    incrementRestarauntCount = () => {
+      let data = [...this.state.dataSource];
+      data.shift();
+
+      this.setState({
+        ...this.state,
+        dataSource: data,
+        count: this.state.count + 1,
+      })
+      if (this.state.dataSource.length == 5) {
+        this.getRestaraunts(this.state.count + 5);
+      }
     }
   
     render(){
@@ -74,7 +84,7 @@ class DinderScreen extends React.Component {
         <SwipeCards
           cards={this.state.dataSource}
           renderCard={(restaurantData) => {
-            
+            // return <RestaurantCard />
             return <View style={[Styles.foodCard]}>
                 <Text>{restaurantData.name}</Text>
                 <Image style={{height:150, width: 150}} source={{uri:restaurantData.thumbnail}}/>
@@ -92,15 +102,24 @@ class DinderScreen extends React.Component {
         />
       );
     }
-    handleYup (card) {
-        console.log(`Yup for ${card.text}`)
-      }
-      handleNope (card) {
-        console.log(`Nope for ${card.text}`)
-      }
-      handleMaybe (card) {
-        console.log(`Maybe for ${card.text}`)
-      }
+
+    handleYup = (card) => {
+      console.log(`Yup for ${card.text}`)
+
+      this.incrementRestarauntCount();
+    }
+
+    handleNope = (card) => {
+      console.log(`Nope for ${card.text}`)
+      this.incrementRestarauntCount();
+
+    }
+
+    handleMaybe = (card) => {
+      console.log(`Maybe for ${card.text}`)
+      this.incrementRestarauntCount();
+
+    }
   }
   
   function mapStateToProps(state) {
