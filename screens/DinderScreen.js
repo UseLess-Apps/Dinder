@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import Styles from '../styles/Styles';
 import { postMatches } from '../backEndRequests';
+import { RestaurantCard } from '../components/RestaurantCard';
+import RestaurantInfoScreen from '../screens/RestaurantInfoScreen';
+import { RESTARAUNT_INFO_SCREEN } from '../navigation/AppNavigator';
 
 class DinderScreen extends React.Component {
   
@@ -75,16 +78,16 @@ class DinderScreen extends React.Component {
       if (this.state.error) {
         return(
           <Text style={{flex: 1, padding: 20}}>
-            Error getting food types, please check your connection.
+            Error getting food types, please check your connection. 
           </Text>
         )
       }
-  
+        
       return (
         <SwipeCards
           cards={this.state.dataSource}
           renderCard={(restaurantData) => {
-            // return <RestaurantCard />
+            // return <RestaurantCard restaurantData={restaurantData}/>
             return <View style={[Styles.foodCard]}>
                 <Text>{restaurantData.name}</Text>
                 <Image style={{height:150, width: 150}} source={{uri:restaurantData.thumbnail}}/>
@@ -104,19 +107,17 @@ class DinderScreen extends React.Component {
     }
 
     handleYup = (card) => {
-      console.log(`Yup for ${card.text}`)
-
+      const { navigate } = this.props.navigation;
+      navigate(RESTARAUNT_INFO_SCREEN, { restaurantData: this.state.dataSource[0] });
       this.incrementRestarauntCount();
     }
 
     handleNope = (card) => {
-      console.log(`Nope for ${card.text}`)
       this.incrementRestarauntCount();
 
     }
 
     handleMaybe = (card) => {
-      console.log(`Maybe for ${card.text}`)
       this.incrementRestarauntCount();
 
     }
