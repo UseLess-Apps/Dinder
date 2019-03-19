@@ -7,10 +7,14 @@ import {
   TextInput,
   Image,
   View,
-  Button,
   TouchableOpacity,
   Alert
 } from 'react-native';
+
+import {
+  Button
+} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { setLocation } from '../redux/actions';
 import { SELECT_FOOD_TYPES } from '../navigation/AppNavigator.js';
@@ -22,7 +26,7 @@ class HomeScreen extends React.Component {
   }
   
   static navigationOptions = {
-    title: "doodoo",
+    header: null,
   };
 
   getLocation = () => {
@@ -40,19 +44,26 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={Styles.homeScreenContainer}> 
-        <Text style={Styles.homeText}> Dinder!! </Text>
-
+        <Text style={Styles.homeText}> Dinder</Text>
+        <Image style={Styles.logo} source={require('../assets/images/chicken.png')}/>
         <View style={Styles.flexRow}> 
           <TextInput
-            placeholder='fudge'
+            placeholder='Location'
             style={Styles.location}
           />
-          <TouchableOpacity onPress={this.getLocation} style={Styles.locationImage}>
-            <Image source={require('../assets/images/myLocation.png')}/>
-          </TouchableOpacity>
+          <Button
+            containerStyle={Styles.locationImage}
+            type='clear'
+            icon={<Icon name="my-location" size={25} color="white"/>}
+            onPress={this.getLocation}
+          />
         </View>
-        <Button title='Click Me!'  disabled={this.props.lat == null ? true : false}
-          onPress={() => navigate(SELECT_FOOD_TYPES)}/>
+        <Button title='Find Cuisines'  
+          containerStyle={Styles.findCuisinesBtn}
+          buttonStyle={Styles.findCuisinesBtnEnabled}
+          disabled={this.props.lat == null ? true : false}
+          onPress={() => navigate(SELECT_FOOD_TYPES)}
+          />
       </View>
       
     );

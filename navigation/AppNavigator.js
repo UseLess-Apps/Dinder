@@ -25,7 +25,6 @@ export const RESTARAUNT_INFO_SCREEN = "RESTARAUNT_INFO_SCREEN";
 
 
 export default HomeStack = createStackNavigator({
-  LOGIN_SCREEN: LoginScreen,
   HOME_SCREEN: HomeScreen,
   SELECT_FOOD_TYPES: FoodScreen,
   DINDER_SWIPE_SCREEN: DinderScreen,
