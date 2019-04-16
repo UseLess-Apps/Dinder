@@ -13,7 +13,7 @@ class CuisineTypeItem extends React.Component {
 
   render() {
     return  <TouchableOpacity onPress={this.ponchoman}>
-        <Text style={[this.props.style, this.state.selected ? ComponentStyles.selected : ComponentStyles.cuisineTypeItem  ]}>{this.props.text}</Text>
+        <Text style={[this.props.style, this.state.selected ? ComponentStyles.selected : ComponentStyles.cuisineTypeItem ]}>{this.props.text}</Text>
       </TouchableOpacity>;
   }
 

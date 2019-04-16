@@ -51,7 +51,15 @@ export default Styles = StyleSheet.create({
     backgroundColor: '#E24782'
   },
   // Food Types screen styles
-
+  foodTypeHeaderStyle: {
+    backgroundColor: 'black',
+    borderWidth: 1,
+    borderBottomColor: 'white',
+    color: 'white',
+  },
+  foodTypeScreenContainer: {
+    backgroundColor: '#FB4F6A',
+  },
   // Dinder Screen styles
   foodCardContainer: {
     padding: 0,

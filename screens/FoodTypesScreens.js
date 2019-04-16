@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import CuisineTypeItem from '../components/CuisineTypeItem';
 import { resetCusines } from '../redux/actions.js';
 import { DINDER_SWIPE_SCREEN } from '../navigation/AppNavigator';
-
+import Styles from '../styles/Styles';
 
 class FoodTypeScreen extends React.Component {
   
@@ -16,6 +16,8 @@ class FoodTypeScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Cuisine Types',
+    headerStyle: Styles.foodTypeHeaderStyle,
+    headerTintColor: '#fff',
   };
 
   componentDidMount(){
@@ -61,15 +63,16 @@ class FoodTypeScreen extends React.Component {
     }
 
     return(
-      <View style={{flex: 1, paddingTop:20}}>
+      <View>
         <FlatList
+          style={Styles.foodTypeScreenContainer}
           data={this.state.dataSource}
           renderItem={({item}) => <CuisineTypeItem id={item.cuisine.cuisine_id} text={item.cuisine.cuisine_name} />}
           keyExtractor={({id}, index) => id}
         />
         <Button title='Find Match!' disabled={this.props.selectedCuisines.length == 0 ? true : false}
           onPress={() => navigate(DINDER_SWIPE_SCREEN)}/>        
-        <Text>{JSON.stringify(this.props.selectedCuisines)}</Text>
+        {/* <Text>{JSON.stringify(this.props.selectedCuisines)}</Text> */}
       </View>
     );
   }
